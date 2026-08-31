@@ -63,9 +63,17 @@ server.delete('/videos/:id', async (request, reply) => {
     return reply.status(204).send()
 })
 
-server.listen({
-    host: '0.0.0.0',
-    port: process.env.PORT ? Number(process.env.PORT) : 3333,
-}).then(() => {
+async function start() {
+  try {
+    await server.listen({
+      host: '0.0.0.0',
+      port: process.env.PORT ? Number(process.env.PORT) : 3333,
+    })
     console.log('HTTP Server Running!')
-})
+  } catch (err) {
+    console.error('Erro ao iniciar o servidor:', err)
+    process.exit(1)
+  }
+}
+
+start()
